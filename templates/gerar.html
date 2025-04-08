@@ -1,23 +1,19 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
-
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <title>Gerar Escala</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="/static/style.css">
 </head>
-
 <body>
-    <h1>Gerar Escala</h1>
-    <form method="POST">
-        <label for="data">Selecione o mês e ano:</label>
-        <input type="month" name="data" required>
-        <button type="submit">Gerar</button>
-    </form>
-    <a href="/">Voltar</a>
-
-    <script src="{{ url_for('static', filename='script.js') }}"></script>
-
+    <div class="container">
+        <h1>Gerar Escala</h1>
+        <form method="post">
+            <label for="data">Escolha o mês e ano:</label>
+            <input type="month" name="data" required>
+            <button type="submit">Gerar</button>
+        </form>
+        <a href="/" class="btn btn-secundario">Voltar</a>
+    </div>
 </body>
-
 </html>

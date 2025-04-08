@@ -1,85 +1,19 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Gerenciador de Escala</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciador de Escala</title>
+    <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-  <div class="container">
-    <h1>Gerenciador de Escala</h1>
-
-    <!-- GERAR ESCALA -->
-    <section>
-      <h2>Gerar Escala</h2>
-      <form action="/gerar" method="POST">
-        <label for="data_mes">Mês e Ano:</label>
-        <input type="month" id="data_mes" name="data_mes" required>
-        <button type="submit">Gerar</button>
-      </form>
-    </section>
-
-    <!-- DESIGNAR FUNCIONÁRIO AO DOMINGO -->
-    <section>
-      <h2>Designar Funcionário ao Domingo</h2>
-      <form action="/designar" method="POST">
-        <label for="data_dia">Dia:</label>
-        <input type="date" id="data_dia" name="data_dia" required>
-
-        <label for="funcionario_designar">Funcionário:</label>
-        <select name="funcionario" id="funcionario_designar" required>
-          {% for func in funcionarios %}
-            <option value="{{ func }}">{{ func }}</option>
-          {% endfor %}
-        </select>
-
-        <button type="submit">Designar</button>
-      </form>
-    </section>
-
-    <!-- TROCAR FUNCIONÁRIOS -->
-    <section>
-      <h2>Trocar Funcionários</h2>
-      <form action="/trocar" method="POST">
-        <label for="data_troca">Dia:</label>
-        <input type="date" id="data_troca" name="data" required>
-
-        <label for="funcionario1">Funcionário 1:</label>
-        <select name="func1" id="funcionario1" required>
-          {% for func in funcionarios %}
-            <option value="{{ func }}">{{ func }}</option>
-          {% endfor %}
-        </select>
-
-        <label for="funcionario2">Funcionário 2:</label>
-        <select name="func2" id="funcionario2" required>
-          {% for func in funcionarios %}
-            <option value="{{ func }}">{{ func }}</option>
-          {% endfor %}
-        </select>
-
-        <button type="submit">Trocar</button>
-      </form>
-    </section>
-
-    <!-- EXPORTAR PARA CSV -->
-    <section>
-      <h2>Exportar Escala</h2>
-      <form action="/exportar" method="GET">
-        <button type="submit">Exportar CSV</button>
-      </form>
-    </section>
-
-    <!-- ESCALA ATUAL -->
-    <section>
-      <h2>Escala Atual</h2>
-      {% if tabela %}
-        {{ tabela | safe }}
-      {% else %}
-        <p>Nenhuma escala gerada ainda.</p>
-      {% endif %}
-    </section>
-  </div>
+    <div class="container">
+        <h1>Gerenciador de Escala</h1>
+        <div class="botoes">
+            <a href="/gerar" class="btn">Gerar Escala</a>
+            <a href="/editar" class="btn">Editar Escala</a>
+            <a href="/exportar" class="btn btn-secundario">Exportar CSV</a>
+        </div>
+    </div>
 </body>
 </html>

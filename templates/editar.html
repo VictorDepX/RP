@@ -1,85 +1,34 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
-  <meta charset="UTF-8" />
-  <title>Edição da Escala</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+    <meta charset="UTF-8">
+    <title>Editar Escala</title>
+    <link rel="stylesheet" href="/static/style.css">
 </head>
-
 <body>
-  <div class="container">
-    <h1>Editar Escala</h1>
+    <div class="container">
+        <h1>Editar Escala</h1>
+        {% if mensagem %}
+        <div class="mensagem">{{ mensagem }}</div>
+        {% endif %}
+        <form method="post">
+            <label for="data">Data (MM-DD):</label>
+            <input type="text" name="data" required>
 
-    {% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-    <ul class="flashes">
-      {% for category, message in messages %}
-      <li class="{{ category }}">{{ message }}</li>
-      {% endfor %}
-    </ul>
-    {% endif %}
-    {% endwith %}
+            <label for="func1">Funcionário 1:</label>
+            <input type="text" name="func1">
 
-    <form action="/designar" method="post">
-      <h2>Designar Funcionário no Domingo</h2>
-      <label for="dia">Dia:</label>
-      <input type="date" name="dia" required />
-      <label for="funcionario">Funcionário:</label>
-      <select name="funcionario">
-        {% for f in funcionarios %}
-        <option value="{{ f }}">{{ f }}</option>
-        {% endfor %}
-      </select>
-      <button type="submit">Designar</button>
-    </form>
+            <label for="func2">Funcionário 2:</label>
+            <input type="text" name="func2">
 
-    <form action="/trocar" method="post">
-      <h2>Trocar Funcionários em um Dia</h2>
-      <label for="dia_troca">Dia:</label>
-      <input type="date" name="dia_troca" required />
-      <label for="funcionario1">Funcionário 1:</label>
-      <select name="funcionario1">
-        {% for f in funcionarios %}
-        <option value="{{ f }}">{{ f }}</option>
-        {% endfor %}
-      </select>
-      <label for="funcionario2">Funcionário 2:</label>
-      <select name="funcionario2">
-        {% for f in funcionarios %}
-        <option value="{{ f }}">{{ f }}</option>
-        {% endfor %}
-      </select>
-      <button type="submit">Trocar</button>
-    </form>
+            <button type="submit" name="acao" value="trocar">Trocar Funcionários</button>
 
-    <h2>Escala Atual</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>Data</th>
-          <th>Funcionário</th>
-          <th>Início</th>
-          <th>Fim</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for _, linha in escala.iterrows() %}
-        <tr>
-          <td>{{ linha["Data"] }}</td>
-          <td>{{ linha["Funcionário"] }}</td>
-          <td>{{ linha["Início"] }}</td>
-          <td>{{ linha["Fim"] }}</td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-
-    <a href="/"><button>Voltar para o Início</button></a>
-  </div>
-
-  <script src="{{ url_for('static', filename='script.js') }}"></script>
-
+            <label for="func">Designar Funcionário (Domingo):</label>
+            <input type="text" name="func">
+            <button type="submit" name="acao" value="designar">Designar Domingo</button>
+        </form>
+        <div class="tabela-container">{{ tabela|safe }}</div>
+        <a href="/" class="btn btn-secundario">Voltar</a>
+    </div>
 </body>
-
 </html>
