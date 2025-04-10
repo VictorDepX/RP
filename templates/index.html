@@ -1,19 +1,79 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-br" data-theme="light">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gerenciador de Escala</title>
-    <link rel="stylesheet" href="/static/style.css">
+    <title>Escala de Funcionários</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="{{ url_for('static', filename='script.js') }}" defer></script>
 </head>
+
 <body>
-    <div class="container">
-        <h1>Gerenciador de Escala</h1>
-        <div class="botoes">
-            <a href="/gerar" class="btn">Gerar Escala</a>
-            <a href="/editar" class="btn">Editar Escala</a>
-            <a href="/exportar" class="btn btn-secundario">Exportar CSV</a>
+    <header>
+        <h1>Escala de Funcionários - {{ escala['mes'] }}/{{ escala['ano'] }}</h1>
+        <div class="controls">
+            <a href="{{ url_for('gerar') }}">Gerar Nova Escala</a>
+            {% if escala and 'ano' in escala and 'mes' in escala %}
+            <a href="{{ url_for('editar', ano=escala['ano'], mes=escala['mes']) }}">Editar Escala</a>
+            {% else %}
+            <p>Nenhuma escala disponível para edição.</p>
+            {% endif %}
+            <a href="{{ url_for('pagamento', ano=escala['ano'], mes=escala['mes']) }}">Ver Relatório</a>
+            <a href="{{ url_for('exportar', ano=escala['ano'], mes=escala['mes']) }}">Exportar PDF</a>
+            <button id="toggleTheme">Alternar Tema</button>
         </div>
-    </div>
+    </header>
+
+    <main>
+        <section class="calendario">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Dom</th>
+                        <th>Seg</th>
+                        <th>Ter</th>
+                        <th>Qua</th>
+                        <th>Qui</th>
+                        <th>Sex</th>
+                        <th>Sáb</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for semana in escala['calendario'] %}
+                    <tr>
+                        {% for dia in semana %}
+                        {% if dia %}
+                        <td class="{{ dia['tipo'] }}" title="Funcionário: {{ dia['funcionario'] or 'Não atribuído' }}">
+                            <strong>{{ dia['dia'] }}</strong><br>
+                            {{ dia['funcionario'] or '-' }}
+                        </td>
+                        {% else %}
+                        <td></td>
+                        {% endif %}
+                        {% endfor %}
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </section>
+
+        <aside>
+            <h2>Escalas Disponíveis</h2>
+            <ul>
+                {% for e in escalas %}
+                <li>
+                    <a href="{{ url_for('index', ano=e['ano'], mes=e['mes']) }}">
+                        {{ e['mes'] }}/{{ e['ano'] }}
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+        </aside>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 - Sistema de Gerenciamento de Escalas</p>
+    </footer>
 </body>
+
 </html>

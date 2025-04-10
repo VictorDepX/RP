@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Relatório de Pagamento</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Relatório de Pagamento - {{ mes }}/{{ ano }}</h1>
+        <table>
+            <tr>
+                <th>Funcionário</th>
+                <th>Horas Trabalhadas</th>
+                <th>Pagamento (R$)</th>
+            </tr>
+            {% for pagamento in pagamentos %}
+            <tr>
+                <td>{{ pagamento.funcionario }}</td>
+                <td>{{ pagamento.horas }}</td>
+                <td>{{ pagamento.pagamento }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        <a href="{{ url_for('index') }}">Voltar</a>
+    </div>
+</body>
+</html>

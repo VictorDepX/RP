@@ -3,32 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <title>Editar Escala</title>
-    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="{{ url_for('static', filename='script.js') }}" defer></script>
 </head>
 <body>
     <div class="container">
         <h1>Editar Escala</h1>
-        {% if mensagem %}
-        <div class="mensagem">{{ mensagem }}</div>
-        {% endif %}
         <form method="post">
-            <label for="data">Data (MM-DD):</label>
-            <input type="text" name="data" required>
+            <input type="month" name="mes_ano" id="mes_ano" required>
+            <input type="hidden" name="mes" id="inputMes">
+            <input type="hidden" name="ano" id="inputAno">
 
-            <label for="func1">Funcionário 1:</label>
-            <input type="text" name="func1">
+            <label for="dia">Dia do mês:</label>
+            <input type="number" name="dia" id="dia" min="1" max="31" required>
 
-            <label for="func2">Funcionário 2:</label>
-            <input type="text" name="func2">
+            <label for="funcionario">Funcionário:</label>
+            <select name="funcionario" required>
+                <option disabled selected>Selecione</option>
+                <option>Luiz Bispo</option>
+                <option>Luiz</option>
+                <option>Samuel</option>
+                <option>Nayara</option>
+                <option>Marina</option>
+            </select>
 
-            <button type="submit" name="acao" value="trocar">Trocar Funcionários</button>
-
-            <label for="func">Designar Funcionário (Domingo):</label>
-            <input type="text" name="func">
-            <button type="submit" name="acao" value="designar">Designar Domingo</button>
+            <button type="submit">Salvar Alteração</button>
         </form>
-        <div class="tabela-container">{{ tabela|safe }}</div>
-        <a href="/" class="btn btn-secundario">Voltar</a>
+        <a href="{{ url_for('index') }}">Voltar</a>
     </div>
 </body>
 </html>
